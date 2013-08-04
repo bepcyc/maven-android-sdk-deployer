@@ -9,7 +9,7 @@
     <parent>
         <groupId>com.simpligility.android.sdk-deployer</groupId>
         <artifactId>android-extras</artifactId>
-        <version>2.0.0</version>
+        <version>2.3.0</version>
     </parent>
  
     <properties>
@@ -40,6 +40,26 @@
                 </configuration>  
             </plugin>
 
+	        <plugin>
+		        <artifactId>maven-jar-plugin</artifactId>
+		        <version>2.4</version>
+		        <executions>
+			        <execution>
+				        <phase>generate-resources</phase>
+				        <goals>
+					        <goal>jar</goal>
+				        </goals>
+				        <configuration>
+					        <classesDirectory>${sdk.extras.compatibility.path}/v7/gridlayout/src</classesDirectory>
+					        <includes>
+						        <include>**/*</include>
+					        </includes>
+					        <finalName>support-sources</finalName>
+				        </configuration>
+			        </execution>
+		        </executions>
+	        </plugin>
+
             <plugin>
                 <artifactId>maven-install-plugin</artifactId>
                 <executions>
@@ -48,11 +68,12 @@
                         <phase>install</phase>
                         <goals><goal>install-file</goal></goals>
                         <configuration>
-                            <groupId>${extras.compatibility.groupid}</groupId>
-                            <artifactId>${android.support.artifactid}</artifactId>
+                            <groupId>${extras.compatibility.v7.groupid}</groupId>
+                            <artifactId>${extras.compatibility.v7.artifactid}</artifactId>
                             <packaging>jar</packaging>
                             <version>${jar.version}</version>
                             <file>${jar.path}</file>
+	                        <sources>${project.build.directory}/support-sources.jar</sources>
                         </configuration>
                     </execution>
                     <execution>
@@ -60,8 +81,8 @@
                         <phase>install</phase>
                         <goals><goal>install-file</goal></goals>
                         <configuration>
-                            <groupId>${extras.compatibility.groupid}</groupId>
-                            <artifactId>${android.support.artifactid}</artifactId>
+                            <groupId>${extras.compatibility.v7.groupid}</groupId>
+                            <artifactId>${extras.compatibility.v7.artifactid}</artifactId>
                             <packaging>apklib</packaging>
                             <version>${jar.version}</version>
                             <file>target/${android.support.artifactid}-${project.version}.apklib</file>
@@ -77,11 +98,12 @@
                         <phase>deploy</phase>
                         <goals><goal>deploy-file</goal></goals>
                         <configuration>
-                            <groupId>${extras.compatibility.groupid}</groupId>
-                            <artifactId>${android.support.artifactid}</artifactId>
+                            <groupId>${extras.compatibility.v7.groupid}</groupId>
+                            <artifactId>${extras.compatibility.v7.groupid}</artifactId>
                             <packaging>jar</packaging>
                             <version>${jar.version}</version>
                             <file>${jar.path}</file>
+	                        <sources>${project.build.directory}/support-sources.jar</sources>
                             <url>${repo.url}</url>
                             <repositoryId>${repo.id}</repositoryId>
                         </configuration>
@@ -91,8 +113,8 @@
                         <phase>deploy</phase>
                         <goals><goal>deploy-file</goal></goals>
                         <configuration>
-                            <groupId>${extras.compatibility.groupid}</groupId>
-                            <artifactId>${android.support.artifactid}</artifactId>
+                            <groupId>${extras.compatibility.v7.groupid}</groupId>
+                            <artifactId>${extras.compatibility.v7.groupid}</artifactId>
                             <packaging>apklib</packaging>
                             <version>${jar.version}</version>
                             <file>target/${android.support.artifactid}-${project.version}.apklib</file>
